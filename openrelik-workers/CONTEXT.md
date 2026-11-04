@@ -19,6 +19,12 @@
   1. Every new or modified feature module under `workers/<worker-name>/src/` must have corresponding test coverage under `workers/<worker-name>/tests/` prefixed with `test_`.
   2. Background agents must verify that `uv run pytest` and `uv run ruff check` pass cleanly in the target worker directory before marking a task complete.
 
+## Change review and fix
+- Always review code against to the initial design or ask before comitting in git.
+- Make sure to fix errors or ommisions.
+- Make sure code is documented according to Google Python standards.
+- Make sure Python code is using type hints using "from __future__ import annotations".
+
 ## Integration Testing
 - **Toolchain:** `openrelik` (OpenRelik CLI)
 - **Execution:** Always use `openrelik skill install --local --harness pi --yes` to generate a skill. Read and learn how you can use the tool from that generated skill file.

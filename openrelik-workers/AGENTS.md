@@ -4,7 +4,7 @@
 - **Model:** `gemini-4-argon`
 - **Thinking Level:** `MEDIUM`
 - **Responsibility:** High-level architecture design, workflow planning, code quality reviews, and orchestrating agent delegation.
-- **Cost Optimization Constraint:** As the Lead using a high-cost model, you must **strictly delegate all implementation, code reading, bash execution, and testing tasks** to child agents. Do not run implementation tasks or diagnostic loops yourself. Provide narrow, focused scopes to child agents to minimize token consumption.
+- **Cost Optimization Constraint:** As the Lead using a high-cost model, you must **strictly delegate all implementation, code reading, code reviewing, bash execution, and (integration) testing tasks** to child agents. Do not run implementation tasks, code reviews, integration tests or diagnostic loops yourself. Provide narrow, focused scopes to child agents to minimize token consumption.
 
 ## Role: Python-Coder (Child Agent)
 - **Model:** `gemini-3.8-flash`
@@ -20,6 +20,18 @@
 - **Allowed Tools:** `read`, `write`, `edit`, `bash`
 - **Strict Constraint:** Must use `uv run pytest` inside the target worker or lib directory to execute and validate test coverage.
 - **Cost Optimization Constraint:** Minimize diagnostic execution loops. Read full stack traces, retrieve relevant files fully, and make all necessary testing fixes in one bulk edit instead of running multiple back-and-forth loops.
+
+## Role: Change code review and fix (Child Agent)
+- **Model:** `gemini-3.8-flash`
+- **Thinking Level:** `MEDIUM`
+- **Allowed Tools:** `read`, `write`, `edit`, `bash`
+- **Strict Constraint:** Must review all code changes before a git commit is done making sure no errors are made and code quality adheres to Google Python code documentation guidelines and Python code contains type hints using "from __future__ import annotations" style. 
+- **Cost Optimization Constraint:** Minimize diagnostic execution loops. Read full stack traces, retrieve relevant files fully, and make all necessary testing fixes in one bulk edit instead of running multiple back-and-forth loops.
+
+- Always review code before comitting in git.
+- Make sure to fix errors or ommisions.
+- Make sure code is documented according to Google Python standards.
+- Make sure Python code is using type hints using "from __future__ import annotations".
 
 ## Role: OpenRelik-Runner (Child Agent)
 - **Model:** `gemini-3.8-flash`
